@@ -1,4 +1,4 @@
-NAME = form
+NAME = Aform
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++17 
@@ -25,6 +25,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) *_shrubbery
 
 re: fclean all
 

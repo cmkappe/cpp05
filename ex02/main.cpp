@@ -6,7 +6,7 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 11:21:42 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/25 11:21:43 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/03/25 11:33:09 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ static void testRobotomy()
 {
 	std::cout << "\n--- Robotomy test ---" << std::endl;
 	Bureaucrat alice("Alice", 40);
-	RobotomyRequestForm robot("Bender");
+	RobotomyRequestForm robot("wall-e");
 
 	alice.signForm(robot);
 	alice.executeForm(robot);
 	alice.executeForm(robot);
+    alice.executeForm(robot);
 }
 
 static void testPresidential()
