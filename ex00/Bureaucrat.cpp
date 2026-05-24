@@ -6,7 +6,7 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 11:44:35 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/23 17:06:41 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/05/24 17:43:53 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
     std::cout << "Bureaucrat copy assignment operator called" << std::endl;
     if (this != &other)
     {
-        // name is const, so we don't assign it
+        // copy only grade, because name is const, so it has to stay unchanged
         grade = other.grade;
     }
     return *this;
 }
 
+// parameterized constructor of Bureaucrat class e.g. Bureaucrat bob("Bob", 42);
 Bureaucrat::Bureaucrat(const std::string& name, int grade) : name(name), grade(grade)
 {
     if (grade < highestGrade)
@@ -86,5 +87,3 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& b)
     os << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
     return os;
 }
-
-

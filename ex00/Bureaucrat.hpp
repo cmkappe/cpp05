@@ -8,6 +8,13 @@ class Form;
 class Bureaucrat
 {
     public:
+        
+        Bureaucrat();
+        Bureaucrat(const std::string& name, int grade);
+        Bureaucrat(const Bureaucrat& other);
+        ~Bureaucrat();
+        Bureaucrat& operator=(const Bureaucrat& other);
+        
         class GradeTooHighException : public std::exception
         {
             public:
@@ -18,12 +25,9 @@ class Bureaucrat
             public:
                 virtual const char* what() const throw();
         };
-
-        Bureaucrat();
-        Bureaucrat(const std::string& name, int grade);
-        Bureaucrat(const Bureaucrat& other);
-        ~Bureaucrat();
-        Bureaucrat& operator=(const Bureaucrat& other);
+        // virtual means "check the real type at runtime, not the declared type at compile time"
+        // without virtual: always calls std::exception::what() → empty/useless message
+        // with virtual: calls exception override → "Exception: Grade too high"
 
         const std::string& getName() const;
         int getGrade() const;
