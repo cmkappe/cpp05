@@ -21,8 +21,6 @@ class Bureaucrat
         class GradeTooLowException : public std::exception
         {
             public:
-                // Same idea here: this returns the message for "grade too low"
-                // Signature matches std::exception::what() so overriding works correctly
                 virtual const char* what() const throw();
         };
 
