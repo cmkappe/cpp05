@@ -68,6 +68,7 @@ void AForm::execute(Bureaucrat const& executor) const
         throw FormNotSignedException();
     if (executor.getGrade() > executeGrade)
         throw GradeTooLowException();
+    // Polymorphism: this calls the concrete form's executeAction at runtime
     executeAction();
 }
 

@@ -29,6 +29,7 @@ class AForm
         AForm();
         AForm(const std::string& name, int signGrade, int executeGrade);
         AForm(const AForm& other);
+        // Virtual destructor ensures correct derived destructor when deleting through AForm*
         virtual ~AForm();
         AForm& operator=(const AForm& other);
 
@@ -38,9 +39,12 @@ class AForm
         int getExecuteGrade() const;
 
         void beSigned(const Bureaucrat& bureaucrat);
+        // Non-virtual template method: shared checks live in base, action is delegated below
         void execute(Bureaucrat const& executor) const;
 
     protected:
+        // Pure virtual makes AForm abstract: you cannot instantiate AForm directly
+        // Virtual dispatch picks the derived class action at runtime
         virtual void executeAction() const = 0;
 
     private:
