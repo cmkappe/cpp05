@@ -6,7 +6,7 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 11:44:35 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/23 17:06:41 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/03/29 14:59:30 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,3 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& b)
     os << b.getName() << ", bureaucrat grade " << b.getGrade() << ".";
     return os;
 }
-
-
