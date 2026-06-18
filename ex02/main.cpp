@@ -6,7 +6,7 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 11:21:42 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/25 11:33:09 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/06/11 14:39:09 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,64 +16,98 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-static void testShrubbery()
+static void section(const std::string& title)
 {
-	std::cout << "\n--- Shrubbery test ---" << std::endl;
-	Bureaucrat bob("Bob", 130);
+	std::cout << "\n\n=== " << title << " ===" << std::endl;
+}
+
+static void testExecuteUnsignedForm()
+{
+	section("Execute unsigned form should fail");
+	Bureaucrat boss("Boss", 1);
+	ShrubberyCreationForm shrub("unsigned_case");
+	boss.executeForm(shrub);
+}
+
+static void testSignTooLow()
+{
+	section("Sign form with too-low grade should fail");
+	Bureaucrat low("Low", 150);
+	ShrubberyCreationForm shrub("low_sign_case");
+	low.signForm(shrub);
+}
+
+static void testExecuteTooLow()
+{
+	section("Execute form with too-low grade should fail");
+	Bureaucrat signer("Signer", 1);
+	Bureaucrat executor("Executor", 140);
+	ShrubberyCreationForm shrub("low_exec_case");
+	signer.signForm(shrub);
+	executor.executeForm(shrub);
+}
+
+static void testShrubberySuccess()
+{
+	section("Shrubbery success case");
+	Bureaucrat gardener("Gardener", 130);
 	ShrubberyCreationForm shrub("home");
-
-	bob.signForm(shrub);
-	bob.executeForm(shrub);
+	gardener.signForm(shrub);
+	gardener.executeForm(shrub);
 }
 
-static void testRobotomy()
+static void testRobotomySuccess()
 {
-	std::cout << "\n--- Robotomy test ---" << std::endl;
-	Bureaucrat alice("Alice", 40);
+	section("Robotomy success cases");
+	Bureaucrat mechanic("Mechanic", 40);
 	RobotomyRequestForm robot("wall-e");
-
-	alice.signForm(robot);
-	alice.executeForm(robot);
-	alice.executeForm(robot);
-    alice.executeForm(robot);
+	mechanic.signForm(robot);
+	for (int i = 0; i < 6; ++i)
+	{
+		std::cout << "Attempt " << (i + 1) << ": ";
+		mechanic.executeForm(robot);
+	}
 }
 
-static void testPresidential()
+static void testPresidentialSuccess()
 {
-	std::cout << "\n--- Presidential test ---" << std::endl;
+	section("Presidential success case");
 	Bureaucrat president("President", 1);
 	PresidentialPardonForm pardon("Arthur Dent");
-
 	president.signForm(pardon);
 	president.executeForm(pardon);
 }
 
-static void testFailures()
+static void testPolymorphicExecution()
 {
-	std::cout << "\n--- Failure test ---" << std::endl;
-	Bureaucrat low("Low", 150);
-	ShrubberyCreationForm shrub("garden");
-
-	// Should fail because the form is not signed.
-	low.executeForm(shrub);
-
-	// Should fail because grade is too low to sign.
-	low.signForm(shrub);
+	section("Polymorphic execute through AForm reference");
+	Bureaucrat chief("Chief", 1);
+	RobotomyRequestForm robot("bender");
+	// baseRef type is AForm&, but the real object is RobotomyRequestForm
+	AForm& baseRef = robot;
+	// using virtual will still run RobotomyRequestForm::executeAction
+	chief.signForm(baseRef);
+	chief.executeForm(baseRef);
 }
 
 int main()
 {
-	try
-	{
-		testShrubbery();
-		testRobotomy();
-		testPresidential();
-		testFailures();
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << "Unexpected error: " << e.what() << std::endl;
-	}
+	section("Initial form state print");
+	ShrubberyCreationForm shrub("preview");
+	RobotomyRequestForm robot("preview");
+	PresidentialPardonForm pardon("preview");
+	std::cout << shrub << std::endl;
+	std::cout << robot << std::endl;
+	std::cout << pardon << std::endl;
+
+	testExecuteUnsignedForm();
+	testSignTooLow();
+	testExecuteTooLow();
+	testShrubberySuccess();
+	testRobotomySuccess();
+	testPresidentialSuccess();
+	testPolymorphicExecution();
+
 	return 0;
 }
 
