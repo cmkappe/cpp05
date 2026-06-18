@@ -10,10 +10,10 @@ class Intern
         ~Intern();
         Intern& operator=(const Intern& other);
 
-        AForm* makeForm(const std::string& formName, const std::string& target);
+        // AForm* makeForm(const std::string& formName, const std::string& target);
 
     
-}
+};
 
 
 /* Since filling out forms all day would be too cruel for our bureaucrats, 

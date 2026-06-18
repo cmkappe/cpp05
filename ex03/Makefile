@@ -1,9 +1,9 @@
-NAME = Aform
+NAME = Intern
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++17 
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17 -fsanitize=address
 
-SRC = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp	
+SRC = main.cpp Intern.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp	
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 
@@ -14,7 +14,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
-$(OBJDIR)/%.o: %.cpp Bureaucrat.hpp AForm.hpp | $(OBJDIR)
+$(OBJDIR)/%.o: %.cpp Bureaucrat.hpp AForm.hpp Intern.hpp | $(OBJDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJDIR):
