@@ -6,7 +6,7 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 14:42:24 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/29 15:09:35 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/06/20 20:26:42 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,27 @@
 #include <unistd.h>
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string& target)
-	: AForm("RobotomyRequestForm", 72, 45), target(target)
-{
+	: AForm("RobotomyRequestForm", 72, 45), target(target) {
 	std::cout << "RobotomyRequestForm constructor called" << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other)
-	: AForm(other), target(other.target)
-{
+	: AForm(other), target(other.target) {
 	std::cout << "RobotomyRequestForm copy constructor called" << std::endl;
 }
 
-RobotomyRequestForm::~RobotomyRequestForm()
-{
+RobotomyRequestForm::~RobotomyRequestForm() {
 	std::cout << "RobotomyRequestForm destructor called" << std::endl;
 }
 
-RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
-{
+RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other) {
 	AForm::operator=(other);
 	(void)other;
 	std::cout << "RobotomyRequestForm copy assignment operator called" << std::endl;
 	return *this;
 }
 
-void RobotomyRequestForm::executeAction() const
-{
+void RobotomyRequestForm::executeAction() const {
 	static bool seeded = false;
 	if (!seeded)
 	{
@@ -58,4 +53,3 @@ void RobotomyRequestForm::executeAction() const
 	else
 		std::cout << "Robotomy failed for " << target << std::endl;
 }
-

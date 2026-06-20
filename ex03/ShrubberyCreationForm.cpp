@@ -6,7 +6,7 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 11:20:46 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/25 11:20:49 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/06/20 21:11:24 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,27 @@
 #include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target)
-	: AForm("ShrubberyCreationForm", 145, 137), target(target)
-{
+	: AForm("ShrubberyCreationForm", 145, 137), target(target) {
 	std::cout << "ShrubberyCreationForm constructor called" << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
-	: AForm(other), target(other.target)
-{
+	: AForm(other), target(other.target) {
 	std::cout << "ShrubberyCreationForm copy constructor called" << std::endl;
 }
 
-ShrubberyCreationForm::~ShrubberyCreationForm()
-{
+ShrubberyCreationForm::~ShrubberyCreationForm() {
 	std::cout << "ShrubberyCreationForm destructor called" << std::endl;
 }
 
-ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
-{
+ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other) {
 	AForm::operator=(other);
 	(void)other;
 	std::cout << "ShrubberyCreationForm copy assignment operator called" << std::endl;
 	return *this;
 }
 
-void ShrubberyCreationForm::executeAction() const
-{
+void ShrubberyCreationForm::executeAction() const {
 	std::ofstream outFile((target + "_shrubbery").c_str());
 	if (!outFile)
 		throw std::runtime_error("Could not create shrubbery file");

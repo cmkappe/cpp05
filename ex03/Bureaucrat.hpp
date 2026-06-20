@@ -5,11 +5,9 @@
 
 class AForm;
 
-class Bureaucrat
-{
+class Bureaucrat {
     public:
-        class GradeTooHighException : public std::exception
-        {
+        class GradeTooHighException : public std::exception {
             public:
                 // what() gives the error message text for this exception
                 // `virtual`: lets C++ call the right version through std::exception
@@ -19,8 +17,7 @@ class Bureaucrat
                 virtual const char* what() const throw();
         };
 
-        class GradeTooLowException : public std::exception
-        {
+        class GradeTooLowException : public std::exception {
             public:
                 // Same idea here: this returns the message for "grade too low"
                 // Signature matches std::exception::what() so overriding works correctly

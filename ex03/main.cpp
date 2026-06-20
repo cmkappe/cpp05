@@ -6,75 +6,46 @@
 /*   By: ckappe <ckappe@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 11:21:42 by ckappe            #+#    #+#             */
-/*   Updated: 2026/03/29 15:07:59 by ckappe           ###   ########.fr       */
+/*   Updated: 2026/03/29 15:48:03 by ckappe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
+#include <memory>
 
-static void testShrubbery()
-{
-	std::cout << "\n--- Shrubbery test ---" << std::endl;
-	Bureaucrat bob("Bob", 130);
-	ShrubberyCreationForm shrub("home");
+static void testInternForm(const std::string& formName,
+	const std::string& target, Bureaucrat& signer) {
+	Intern intern;
+	// makeForm allocates with new; unique_ptr guarantees cleanup on all paths
+	std::unique_ptr<AForm> form(intern.makeForm(formName, target));
 
-	bob.signForm(shrub);
-	bob.executeForm(shrub);
+	// Unknown form names return NULL in Intern::makeForm
+	if (!form)
+		return;
+
+	// Happy path: inspect, sign, then execute the created form
+	std::cout << *form << std::endl;
+	signer.signForm(*form);
+	signer.executeForm(*form);
 }
 
-static void testRobotomy()
-{
-	std::cout << "\n--- Robotomy test ---" << std::endl;
-	Bureaucrat alice("Alice", 40);
-	RobotomyRequestForm robot("wall-e");
-
-	alice.signForm(robot);
-	for (int i = 0; i < 10; ++i)
-	{
-		std::cout << "Attempt " << (i + 1) << ": ";
-		alice.executeForm(robot);
-	}
-}
-
-static void testPresidential()
-{
-	std::cout << "\n--- Presidential test ---" << std::endl;
-	Bureaucrat president("President", 1);
-	PresidentialPardonForm pardon("Arthur Dent");
-
-	president.signForm(pardon);
-	president.executeForm(pardon);
-}
-
-static void testFailures()
-{
-	std::cout << "\n--- Failure test ---" << std::endl;
-	Bureaucrat low("Low", 150);
-	ShrubberyCreationForm shrub("garden");
-
-	// Should fail because the form is not signed
-	low.executeForm(shrub);
-
-	// Should fail because grade is too low to sign
-	low.signForm(shrub);
-}
-
-int main()
-{
+int main() {
 	try
 	{
-		testShrubbery();
-		testRobotomy();
-		testPresidential();
-		testFailures();
+		Bureaucrat chief("Chief", 1);
+
+		std::cout << "\n--- Intern valid forms ---" << std::endl;
+		testInternForm("shrubbery creation", "home", chief);
+		testInternForm("robotomy request", "Bender", chief);
+		testInternForm("presidential pardon", "Arthur Dent", chief);
+
+		std::cout << "\n--- Intern invalid form ---" << std::endl;
+		testInternForm("coffee request", "Office", chief);
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << "Unexpected error: " << e.what() << std::endl;
+		std::cerr << "Unexpected exception: " << e.what() << std::endl;
 	}
 	return 0;
 }

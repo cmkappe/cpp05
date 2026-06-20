@@ -2,8 +2,7 @@
 
 #include "AForm.hpp"
 
-class ShrubberyCreationForm : public AForm
-{
+class ShrubberyCreationForm : public AForm {
 	public:
 		ShrubberyCreationForm(const std::string& target);
 		ShrubberyCreationForm(const ShrubberyCreationForm& other);
